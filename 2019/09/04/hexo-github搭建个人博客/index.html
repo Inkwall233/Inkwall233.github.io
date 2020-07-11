@@ -32,12 +32,12 @@
 <meta property="og:site_name" content="城墙墨">
 <meta property="og:description" content="由于电脑崩了几次，系统重装了几回，这是第三次搭建博客，安装的hexo的next主题也是从一开始的6的版本升级到了7.4。所以在这里把搭建的过程记录一下，写下自己踩过的坑。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://cdn-1252875933.cos.ap-beijing.myqcloud.com/images/2019/09/5d735cbf6150c.jpg">
-<meta property="og:updated_time" content="2020-05-22T12:25:03.597Z">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/inkwall233/imgcdn/imgcdn/20200711101520.jpg">
+<meta property="og:updated_time" content="2020-07-11T02:42:50.560Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="hexo+github搭建个人博客">
 <meta name="twitter:description" content="由于电脑崩了几次，系统重装了几回，这是第三次搭建博客，安装的hexo的next主题也是从一开始的6的版本升级到了7.4。所以在这里把搭建的过程记录一下，写下自己踩过的坑。">
-<meta name="twitter:image" content="https://cdn-1252875933.cos.ap-beijing.myqcloud.com/images/2019/09/5d735cbf6150c.jpg">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/inkwall233/imgcdn/imgcdn/20200711101520.jpg">
 
 <link rel="canonical" href="https://blog.inkwall.cn/2019/09/04/hexo-github搭建个人博客/">
 
@@ -251,12 +251,14 @@
 
       
         <div class="post-gallery" itemscope itemtype="http://schema.org/ImageGallery">
-            <img src="https://cdn-1252875933.cos.ap-beijing.myqcloud.com/images/2019/09/5d735cbf6150c.jpg" itemprop="contentUrl">
+            <img src="https://cdn.jsdelivr.net/gh/inkwall233/imgcdn/imgcdn/20200711101520.jpg" itemprop="contentUrl">
         </div>
         <p>由于电脑崩了几次，系统重装了几回，这是第三次搭建博客，安装的hexo的next主题也是从一开始的6的版本升级到了7.4。所以在这里把搭建的过程记录一下，写下自己踩过的坑。</p>
 <a id="more"></a>
 
 <h2 id="一、准备工作"><a href="#一、准备工作" class="headerlink" title="一、准备工作"></a>一、准备工作</h2><h3 id="1-搭建Node-js环境"><a href="#1-搭建Node-js环境" class="headerlink" title="1.搭建Node.js环境"></a>1.搭建Node.js环境</h3><p>下载地址：<a href="http://nodejs.cn/download/" target="_blank" rel="noopener">Node.js</a></p>
+<p>检查node是否安装成功，在命令行中输入 <code>node -v</code></p>
+<p>返回版本号即为安装成功</p>
 <h3 id="2-安装Git工具"><a href="#2-安装Git工具" class="headerlink" title="2.安装Git工具"></a>2.安装Git工具</h3><p>下载地址：<a href="https://git-scm.com/downloads" target="_blank" rel="noopener">git</a></p>
 <p>安装好git的标志就是<strong>鼠标右键会出现<code>git bush here</code>和<code>git gui here</code></strong></p>
 <h3 id="3-Github账户注册和新建项目"><a href="#3-Github账户注册和新建项目" class="headerlink" title="3.Github账户注册和新建项目"></a>3.Github账户注册和新建项目</h3><p>gitHub是一个面向开源及私有软件项目的托管平台，因为只支持git 作为唯一的版本库格式进行托管，故名gitHub。这里用到Github，是因为我们需要通过Github得到自己的博客网站域名，而且需要使用gitHub同步我们个人博客的相关文件。<br>注册地址：<a href="https://github.com" target="_blank" rel="noopener">https://github.com</a><br>注册流程：<a href="https://www.baidu.com" target="_blank" rel="noopener">https://www.baidu.com</a> ,百度一下，你就知道啦。</p>
@@ -272,17 +274,33 @@
 <p>输入<code>hexo s</code>，开启服务器，本地预览该网址 </p>
 <p>输入网址<a href="http://localhost:4000/" target="_blank" rel="noopener">http://localhost:4000/</a> 就可以看到自己的博客啦</p>
 <p>但是此时只能本地预览博客，发布到网上需要下一步</p>
-<h2 id="二、Hexo与Github-page联系起来"><a href="#二、Hexo与Github-page联系起来" class="headerlink" title="二、Hexo与Github page联系起来"></a>二、Hexo与Github page联系起来</h2><p>​    设置密匙</p>
-<p>上图是在其文件夹里面鼠标右键，点击<code>Git Base Here</code>。这里“feng”替换成自己的用户名，邮箱替换成自己的邮箱</p>
-<p>输入<code>ssh-keygen -t rsa -C “929762930@qq.com”</code>，连续三个回车，生成密钥，最后得到了两个文件：id_rsa和id_rsa.pub（默认存储路径是：C:\Users\Administrator.ssh）。</p>
-<p>输入<code>cd ~/.ssh</code>，检查是否由.ssh的文件夹</p>
+<h2 id="二、Hexo与Github-page联系起来"><a href="#二、Hexo与Github-page联系起来" class="headerlink" title="二、Hexo与Github page联系起来"></a>二、Hexo与Github page联系起来</h2><p>以下操作均在博客本地文件夹下面使用鼠标右键单击 <code>git bash here</code></p>
+<ol>
+<li><p>配置 git 个人信息，生成新的 ssh 密钥：</p>
+<p>git config –global user.name “xxxxxx”<br>git config –global user.email “xxxxxx”<br>ssh-keygen -t rsa -C “xxxxxxxx(邮箱)”</p>
+<p>连续三个回车，生成密钥，最后得到了两个文件：id_rsa和id_rsa.pub（默认存储路径是：C:\Users\Administrator.ssh）。</p>
+<p>输入<code>cd ~/.ssh</code>，检查是否有.ssh的文件夹</p>
+</li>
+</ol>
+<ol start="2">
+<li><p>添加公钥</p>
 <p>登录Github，点击头像下的settings，添加ssh</p>
-<p>​    配置Deployment</p>
-<p>在blog文件夹下找到_config.yml文件</p>
-<p>修改文件repo：把userneme换成自己的用户名例如<a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a>:Inkwall233/Inkwall233.github.io.git</p>
+<p>即在用户文件夹.ssh 文件里面把公钥复制出来粘贴到GitHub个人设置的ssh位置。</p>
+</li>
+<li><p>修改博客根目录文件的_config.yml文件</p>
+<p>修改文件repo：把userneme换成自己的用户名</p>
+<p>例如：<a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a>:Inkwall233/Inkwall233.github.io.git</p>
 <p>(inkwall233是我的用户名)</p>
-<p>此时输入<code>hexo clean</code></p>
-<p><code>hexo d</code>部署博客到GitHub上，</p>
+<pre><code>deploy:
+  type: git  
+  repo: git@github.com:Inkwall233/Inkwall233.github.io.git
+  branch: master
+</code></pre><p>这个时候本地博客已经和GitHub连接了</p>
+</li>
+</ol>
+<p>开始部署：</p>
+<p>输入<code>hexo clean</code> </p>
+<p>输入<code>hexo d</code>部署博客到GitHub上，</p>
 <p>在浏览器输入<code>用户名.github.io</code>就能访问了例如<a href="https://inkwall233.github.io" target="_blank" rel="noopener">https://inkwall233.github.io</a></p>
 <h2 id="三、更换主题"><a href="#三、更换主题" class="headerlink" title="三、更换主题"></a>三、更换主题</h2><p>访问官网有<a href="https://hexo.io" target="_blank" rel="noopener">https://hexo.io</a> ,可以找到很多主题，这里我选择的是Next Gemini主题</p>
 <p>下载主题</p>
@@ -309,7 +327,9 @@ hexo d <span class="token operator">==</span> hexo deploy</code></pre>
 <p>组合命令：</p>
 <pre class=" language-bash"><code class="language-bash">hexo s -g <span class="token comment" spellcheck="true">#生成并本地预览</span>
 hexo d -g <span class="token comment" spellcheck="true">#生成并上传</span></code></pre>
-<p>next主题搭建完成，主题优化见下一个博客文章</p>
+<p>next主题搭建完成。</p>
+<h2 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h2><p>next主题优化网络上面有很多，风格都不一，下面就不写了。</p>
+<p>查看我的搭建效果的请点击<a href="https://inkwall233.github.io" target="_blank" rel="noopener">https://inkwall233.github.io</a>访问</p>
 
     </div>
 
@@ -330,8 +350,8 @@ hexo d -g <span class="token comment" spellcheck="true">#生成并上传</span><
     <div class="post-nav">
       <div class="post-nav-item"></div>
       <div class="post-nav-item">
-    <a href="/2019/09/05/hexo-next7-4主题优化/" rel="next" title="hexo next7.4主题优化">
-      hexo next7.4主题优化 <i class="fa fa-chevron-right"></i>
+    <a href="/2019/09/05/我来啦/" rel="next" title="微软u盘启动盘重装系统">
+      微软u盘启动盘重装系统 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -392,7 +412,7 @@ hexo d -g <span class="token comment" spellcheck="true">#生成并上传</span><
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、准备工作"><span class="nav-number">1.</span> <span class="nav-text">一、准备工作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-搭建Node-js环境"><span class="nav-number">1.1.</span> <span class="nav-text">1.搭建Node.js环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-安装Git工具"><span class="nav-number">1.2.</span> <span class="nav-text">2.安装Git工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Github账户注册和新建项目"><span class="nav-number">1.3.</span> <span class="nav-text">3.Github账户注册和新建项目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-安装Hexo博客框架工具"><span class="nav-number">1.4.</span> <span class="nav-text">4.安装Hexo博客框架工具</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、Hexo与Github-page联系起来"><span class="nav-number">2.</span> <span class="nav-text">二、Hexo与Github page联系起来</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、更换主题"><span class="nav-number">3.</span> <span class="nav-text">三、更换主题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用hexo命令"><span class="nav-number">4.</span> <span class="nav-text">常用hexo命令</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、准备工作"><span class="nav-number">1.</span> <span class="nav-text">一、准备工作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-搭建Node-js环境"><span class="nav-number">1.1.</span> <span class="nav-text">1.搭建Node.js环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-安装Git工具"><span class="nav-number">1.2.</span> <span class="nav-text">2.安装Git工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Github账户注册和新建项目"><span class="nav-number">1.3.</span> <span class="nav-text">3.Github账户注册和新建项目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-安装Hexo博客框架工具"><span class="nav-number">1.4.</span> <span class="nav-text">4.安装Hexo博客框架工具</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、Hexo与Github-page联系起来"><span class="nav-number">2.</span> <span class="nav-text">二、Hexo与Github page联系起来</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、更换主题"><span class="nav-number">3.</span> <span class="nav-text">三、更换主题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用hexo命令"><span class="nav-number">4.</span> <span class="nav-text">常用hexo命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#写在最后"><span class="nav-number">5.</span> <span class="nav-text">写在最后</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -408,7 +428,7 @@ hexo d -g <span class="token comment" spellcheck="true">#生成并上传</span><
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-count">14</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
