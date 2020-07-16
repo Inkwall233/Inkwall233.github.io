@@ -1,5 +1,5 @@
+https://blog.inkwall.cn/2020/07/16/JS高级3原型链-1/
 https://blog.inkwall.cn/2020/05/21/node爬虫爬取b站壁纸娘/
 https://blog.inkwall.cn/2020/04/29/js高级2原生js写贪吃蛇/
 https://blog.inkwall.cn/2020/04/29/js高级1面向对象编程/
 https://blog.inkwall.cn/2020/04/13/js作用域和预解析/
-https://blog.inkwall.cn/2020/03/11/Live2D-自制看板娘/

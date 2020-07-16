@@ -33,7 +33,7 @@
 <meta property="og:description" content="壁纸娘发的图片真好看啊，不如……              爬虫需要遵循Robots协议">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/inkwall233/imgcdn/imgcdn/20200524174440.png">
-<meta property="og:updated_time" content="2020-05-28T02:49:40.513Z">
+<meta property="og:updated_time" content="2020-07-16T01:39:59.795Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="爬取b站壁纸娘壁纸|node爬虫">
 <meta name="twitter:description" content="壁纸娘发的图片真好看啊，不如……              爬虫需要遵循Robots协议">
@@ -275,9 +275,8 @@
 <p>这个时候需要分析接口</p>
 <p>而b站就是属于第二种</p>
 <h3 id="分析流程"><a href="#分析流程" class="headerlink" title="分析流程"></a>分析流程</h3><ol>
-<li>找到返回壁纸的接口</li>
-</ol>
-<ol start="2">
+<li><p>找到返回壁纸的接口</p>
+</li>
 <li><p>通过访问接口，返回批量壁纸下载链接</p>
 </li>
 <li><p>下载壁纸</p>
@@ -295,6 +294,61 @@
 <p>axios请求库</p>
 <pre><code>npm i axios</code></pre></li>
 </ol>
+<h3 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h3><h4 id="1-找到返回壁纸的接口"><a href="#1-找到返回壁纸的接口" class="headerlink" title="1.找到返回壁纸的接口"></a>1.找到返回壁纸的接口</h4><p><img src="https://cdn.jsdelivr.net/gh/inkwall233/imgcdn/imgcdn/20200716093940.png" alt></p>
+<h3 id="2-通过访问接口，返回批量壁纸下载链接"><a href="#2-通过访问接口，返回批量壁纸下载链接" class="headerlink" title="2.通过访问接口，返回批量壁纸下载链接"></a>2.通过访问接口，返回批量壁纸下载链接</h3><p>可以看到图片的src在data对象中，通过遍历就可以获取所有下载链接</p>
+<pre class=" language-js"><code class="language-js"><span class="token comment" spellcheck="true">//分析页面</span>
+<span class="token keyword">async</span> <span class="token keyword">function</span> <span class="token function">parsePage</span><span class="token punctuation">(</span>uid<span class="token punctuation">,</span> num<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">try</span> <span class="token punctuation">{</span>
+        <span class="token keyword">const</span> downUrlArr <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+        <span class="token keyword">const</span> downNameArr <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> num<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token comment" spellcheck="true">//接口地址</span>
+            <span class="token keyword">let</span> pageUrl <span class="token operator">=</span> <span class="token string">"https://api.vc.bilibili.com/link_draw/v1/doc/doc_list?uid="</span> <span class="token operator">+</span> uid <span class="token operator">+</span> <span class="token string">"&amp;page_num="</span> <span class="token operator">+</span> i <span class="token operator">+</span>
+                <span class="token string">"&amp;page_size=30&amp;biz=all"</span>
+
+            <span class="token keyword">const</span> res <span class="token operator">=</span> <span class="token keyword">await</span> axios<span class="token punctuation">.</span><span class="token keyword">get</span><span class="token punctuation">(</span>pageUrl<span class="token punctuation">)</span>
+            res<span class="token punctuation">.</span>data<span class="token punctuation">.</span>data<span class="token punctuation">.</span>items<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token punctuation">(</span>item<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">{</span>
+                <span class="token keyword">let</span> title <span class="token operator">=</span> item<span class="token punctuation">.</span>doc_id
+                <span class="token keyword">let</span> imgUrlArr <span class="token operator">=</span> item<span class="token punctuation">.</span>pictures
+
+                <span class="token keyword">let</span> imgUrl <span class="token operator">=</span> imgUrlArr<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>img_src
+                <span class="token comment" spellcheck="true">//存入数组</span>
+                downUrlArr<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>imgUrl<span class="token punctuation">)</span>
+                downNameArr<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>title<span class="token punctuation">)</span>
+            <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token comment" spellcheck="true">//打印出下载链接</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>downUrlArr<span class="token punctuation">)</span>
+        <span class="token comment" spellcheck="true">//下载图片</span>
+        <span class="token function">downImgs</span><span class="token punctuation">(</span>downUrlArr<span class="token punctuation">,</span> downNameArr<span class="token punctuation">)</span>
+        <span class="token keyword">return</span> Promise<span class="token punctuation">.</span><span class="token function">resolve</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">err</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> Promise<span class="token punctuation">.</span><span class="token function">reject</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<h4 id="3-下载壁纸"><a href="#3-下载壁纸" class="headerlink" title="3.下载壁纸"></a>3.下载壁纸</h4><pre class=" language-js"><code class="language-js"><span class="token keyword">async</span> <span class="token keyword">function</span> <span class="token function">downImg</span><span class="token punctuation">(</span>imgUrl<span class="token punctuation">,</span> index<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">try</span> <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">//图片路径</span>
+        <span class="token keyword">let</span> pathname <span class="token operator">=</span> path<span class="token punctuation">.</span><span class="token function">resolve</span><span class="token punctuation">(</span>__dirname<span class="token punctuation">,</span> <span class="token template-string"><span class="token string">`./img/</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>imgUrl<span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span><span class="token string">'/'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">`</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// console.log(pathname)</span>
+        <span class="token comment" spellcheck="true">//创建图片写入流</span>
+        <span class="token keyword">const</span> res <span class="token operator">=</span> <span class="token keyword">await</span> axios<span class="token punctuation">.</span><span class="token keyword">get</span><span class="token punctuation">(</span>imgUrl<span class="token punctuation">,</span> <span class="token punctuation">{</span>
+            responseType<span class="token punctuation">:</span> <span class="token string">'stream'</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span>
+        <span class="token keyword">let</span> ws <span class="token operator">=</span> fs<span class="token punctuation">.</span><span class="token function">createWriteStream</span><span class="token punctuation">(</span>pathname<span class="token punctuation">)</span>
+        <span class="token keyword">await</span> res<span class="token punctuation">.</span>data<span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span>ws<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">await</span> res<span class="token punctuation">.</span>data<span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">'close'</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            ws<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+            console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token template-string"><span class="token string">`第</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>index<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">张写入完成`</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+        <span class="token keyword">return</span> Promise<span class="token punctuation">.</span><span class="token function">resolve</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">err</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'写入失败'</span><span class="token punctuation">)</span>
+        <span class="token keyword">return</span> Promise<span class="token punctuation">.</span><span class="token function">reject</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<h3 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h3><p><img src="https://cdn.jsdelivr.net/gh/inkwall233/imgcdn//imgcdn/20200716092157.gif" alt></p>
 <h3 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h3><pre class=" language-js"><code class="language-js"><span class="token keyword">const</span> axios <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'axios'</span><span class="token punctuation">)</span>
 <span class="token keyword">const</span> fs <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'fs'</span><span class="token punctuation">)</span>
 
@@ -406,7 +460,10 @@
     <a href="/2020/04/29/js高级2原生js写贪吃蛇/" rel="prev" title="原生js写贪吃蛇| JavaScript高级学习（二）">
       <i class="fa fa-chevron-left"></i> 原生js写贪吃蛇| JavaScript高级学习（二）
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2020/07/16/JS高级3原型链-1/" rel="next" title="原型链、继承| JavaScript高级学习（三）">
+      原型链、继承| JavaScript高级学习（三） <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -466,7 +523,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一般爬虫类型"><span class="nav-number">1.</span> <span class="nav-text">一般爬虫类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-服务端渲染的页面-ssr"><span class="nav-number">1.1.</span> <span class="nav-text">1.服务端渲染的页面(ssr)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-客户端渲染的页面-csr"><span class="nav-number">1.2.</span> <span class="nav-text">2.客户端渲染的页面(csr)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分析流程"><span class="nav-number">2.</span> <span class="nav-text">分析流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#准备"><span class="nav-number">3.</span> <span class="nav-text">准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#完整代码"><span class="nav-number">4.</span> <span class="nav-text">完整代码</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一般爬虫类型"><span class="nav-number">1.</span> <span class="nav-text">一般爬虫类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-服务端渲染的页面-ssr"><span class="nav-number">1.1.</span> <span class="nav-text">1.服务端渲染的页面(ssr)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-客户端渲染的页面-csr"><span class="nav-number">1.2.</span> <span class="nav-text">2.客户端渲染的页面(csr)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分析流程"><span class="nav-number">2.</span> <span class="nav-text">分析流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#准备"><span class="nav-number">3.</span> <span class="nav-text">准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开始"><span class="nav-number">4.</span> <span class="nav-text">开始</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-找到返回壁纸的接口"><span class="nav-number">4.1.</span> <span class="nav-text">1.找到返回壁纸的接口</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-通过访问接口，返回批量壁纸下载链接"><span class="nav-number">5.</span> <span class="nav-text">2.通过访问接口，返回批量壁纸下载链接</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-下载壁纸"><span class="nav-number">5.1.</span> <span class="nav-text">3.下载壁纸</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运行"><span class="nav-number">6.</span> <span class="nav-text">运行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#完整代码"><span class="nav-number">7.</span> <span class="nav-text">完整代码</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -482,7 +539,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-count">15</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
