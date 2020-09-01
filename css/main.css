@@ -1253,7 +1253,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #7e6bcd;
+  background: #ff83a2;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2636,11 +2636,6 @@ ul.breadcrumb li + li:last-child {
 .site-subtitle {
   color: #fff;
 }
-body {
-  background-image: url("/./images/main-bg.jpg");
-  background-size: 100%;
-  background-repeat: no-repeat;
-}
 .site-author-image {
   border: none;
 }
@@ -2677,7 +2672,7 @@ body {
   }
   .site-brand-container {
     background-color: none;
-    background-image: url("/./images/brand-bg.jpg");
+    background-image: url("https://cdn.jsdelivr.net/gh/inkwall233/imgcdn/brand-bg.jpg");
     background-repeat: no-repeat;
     background-size: 100%;
   }

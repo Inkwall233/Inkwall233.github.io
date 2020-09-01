@@ -35,7 +35,7 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/inkwall233/imgcdn//imgcdn/20200716092408.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/inkwall233/imgcdn//imgcdn/20200716092611.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/inkwall233/imgcdn//imgcdn/20200716092737.png">
-<meta property="og:updated_time" content="2020-07-16T01:37:42.350Z">
+<meta property="og:updated_time" content="2020-07-16T02:13:04.967Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="原型链、继承| JavaScript高级学习（三）">
 <meta name="twitter:description" content="对象的继承">
@@ -469,7 +469,7 @@ Person<span class="token punctuation">.</span>prototype<span class="token punctu
 <span class="token punctuation">}</span>
 <span class="token comment" spellcheck="true">//原型继承</span>
 Student<span class="token punctuation">.</span>prototype <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Person</span><span class="token punctuation">(</span><span class="token punctuation">)</span>    <span class="token comment" spellcheck="true">//不传值</span>
-<span class="token comment" spellcheck="true">//别忘了指回Student.prototype.constructor</span>
+<span class="token comment" spellcheck="true">//别忘了指回Student.prototype.constructor，指回的作用是知道是由谁构造出来的。</span>
 Student<span class="token punctuation">.</span>prototype<span class="token punctuation">.</span>constructor <span class="token operator">=</span> Student
 
 <span class="token keyword">var</span> stu <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Student</span><span class="token punctuation">(</span><span class="token string">"张三"</span><span class="token punctuation">,</span><span class="token number">12</span><span class="token punctuation">,</span><span class="token string">"男"</span><span class="token punctuation">,</span><span class="token number">100</span><span class="token punctuation">)</span>
