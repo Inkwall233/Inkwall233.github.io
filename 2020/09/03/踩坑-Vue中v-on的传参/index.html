@@ -25,17 +25,19 @@
   </script>
 
   <meta name="description" content="你驻足于春色中,于那独一无二的春色之中">
-<meta property="og:type" content="website">
-<meta property="og:title" content="城墙墨">
-<meta property="og:url" content="https://inkwall.gitee.io/archives/2019/index.html">
+<meta name="keywords" content="vue">
+<meta property="og:type" content="article">
+<meta property="og:title" content="踩坑|Vue子传父引发的v-on的传参疑惑">
+<meta property="og:url" content="https://inkwall.gitee.io/2020/09/03/踩坑-Vue中v-on的传参/index.html">
 <meta property="og:site_name" content="城墙墨">
 <meta property="og:description" content="你驻足于春色中,于那独一无二的春色之中">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-09-03T03:41:12.953Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="城墙墨">
+<meta name="twitter:title" content="踩坑|Vue子传父引发的v-on的传参疑惑">
 <meta name="twitter:description" content="你驻足于春色中,于那独一无二的春色之中">
 
-<link rel="canonical" href="https://inkwall.gitee.io/archives/2019/">
+<link rel="canonical" href="https://inkwall.gitee.io/2020/09/03/踩坑-Vue中v-on的传参/">
 
 
 <script id="page-configurations">
@@ -43,12 +45,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>归档 | 城墙墨</title>
+  <title>踩坑|Vue子传父引发的v-on的传参疑惑 | 城墙墨</title>
   
 
 
@@ -172,196 +174,120 @@
         <div class="content-wrap">
           
 
-          <div class="content archive">
+          <div class="content post posts-expand">
             
 
+    
   
   
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://inkwall.gitee.io/2020/09/03/踩坑-Vue中v-on的传参/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/./images/avatar.png">
+      <meta itemprop="name" content="城墙墨">
+      <meta itemprop="description" content="你驻足于春色中,于那独一无二的春色之中">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="城墙墨">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          踩坑|Vue子传父引发的v-on的传参疑惑
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-09-03 10:59:17" itemprop="dateCreated datePublished" datetime="2020-09-03T10:59:17+08:00">2020-09-03</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/vue/" itemprop="url" rel="index"><span itemprop="name">vue</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
   
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <span class="collection-header">嗯..! 目前共计 16 篇日志。 继续努力。</span>
-      </div>
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/09/03/踩坑-Vue中v-on的传参/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/09/03/踩坑-Vue中v-on的传参/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2019</span>
+        
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+    
+    
+    
 
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-10-23T20:26:23+08:00"
-              content="2019-10-23">
-          10-23
-        </time>
-      </div>
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/vue/" rel="tag"><i class="fa fa-tag"></i> vue</a>
+          </div>
 
-      <div class="post-title">
-          <a class="post-title-link" href="/2019/10/23/第一次数据结构实验/" itemprop="url">
-            <span itemprop="name">定义学生信息（学号，姓名，成绩）的顺序表和链表</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-10-02T19:29:18+08:00"
-              content="2019-10-02">
-          10-02
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2019/10/02/如果喜欢那就坚持吧/" itemprop="url">
-            <span itemprop="name">如果喜欢那就坚持吧!</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-09-16T17:51:40+08:00"
-              content="2019-09-16">
-          09-16
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2019/09/16/给网站加运行时间/" itemprop="url">
-            <span itemprop="name">给网站加运行时间</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-09-12T15:51:59+08:00"
-              content="2019-09-12">
-          09-12
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2019/09/12/div横向排列及清除元素浮动影响/" itemprop="url">
-            <span itemprop="name">清除元素浮动的四种方式</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-09-06T09:34:40+08:00"
-              content="2019-09-06">
-          09-06
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2019/09/06/我自己写了一个网站/" itemprop="url">
-            <span itemprop="name">我自己写了一个网站</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-09-05T18:59:49+08:00"
-              content="2019-09-05">
-          09-05
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2019/09/05/相对路径和绝对路径/" itemprop="url">
-            <span itemprop="name">相对路径和绝对路径</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-09-05T08:53:42+08:00"
-              content="2019-09-05">
-          09-05
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2019/09/05/我来啦/" itemprop="url">
-            <span itemprop="name">微软u盘启动盘重装系统</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-09-04T08:14:34+08:00"
-              content="2019-09-04">
-          09-04
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2019/09/04/hexo-github搭建个人博客/" itemprop="url">
-            <span itemprop="name">hexo+github搭建个人博客</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
+        
 
 
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/07/16/JS高级3原型链-1/" rel="prev" title="原型链、继承| JavaScript高级学习（三）">
+      <i class="fa fa-chevron-left"></i> 原型链、继承| JavaScript高级学习（三）
+    </a></div>
+      <div class="post-nav-item"></div>
     </div>
-  </div>
+      </footer>
+    
+  </article>
   
   
-  
-
   
 
 
 
           </div>
           
+    <div class="comments" id="valine-comments"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {

@@ -1,5 +1,5 @@
-https://inkwall.gitee.io/myblog/2020/07/16/JS高级3原型链-1/
-https://inkwall.gitee.io/myblog/2020/05/21/node爬虫爬取b站壁纸娘/
-https://inkwall.gitee.io/myblog/2020/04/29/js高级2原生js写贪吃蛇/
-https://inkwall.gitee.io/myblog/2020/04/29/js高级1面向对象编程/
-https://inkwall.gitee.io/myblog/2020/04/13/js作用域和预解析/
+https://inkwall.gitee.io/2020/09/03/踩坑-Vue中v-on的传参/
+https://inkwall.gitee.io/2020/07/16/JS高级3原型链-1/
+https://inkwall.gitee.io/2020/05/21/node爬虫爬取b站壁纸娘/
+https://inkwall.gitee.io/2020/04/29/js高级2原生js写贪吃蛇/
+https://inkwall.gitee.io/2020/04/29/js高级1面向对象编程/
