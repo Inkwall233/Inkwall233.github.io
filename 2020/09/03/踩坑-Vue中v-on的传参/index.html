@@ -24,18 +24,18 @@
     var CONFIG = {"hostname":"inkwall.gitee.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="你驻足于春色中,于那独一无二的春色之中">
+  <meta name="description" content="Vue事件监听v-on的参数传递和父子组件通信">
 <meta name="keywords" content="vue">
 <meta property="og:type" content="article">
 <meta property="og:title" content="踩坑|Vue子传父引发的v-on的传参疑惑">
 <meta property="og:url" content="https://inkwall.gitee.io/2020/09/03/踩坑-Vue中v-on的传参/index.html">
 <meta property="og:site_name" content="城墙墨">
-<meta property="og:description" content="你驻足于春色中,于那独一无二的春色之中">
+<meta property="og:description" content="Vue事件监听v-on的参数传递和父子组件通信">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-09-03T03:41:12.953Z">
+<meta property="og:updated_time" content="2020-09-06T00:30:16.695Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="踩坑|Vue子传父引发的v-on的传参疑惑">
-<meta name="twitter:description" content="你驻足于春色中,于那独一无二的春色之中">
+<meta name="twitter:description" content="Vue事件监听v-on的参数传递和父子组件通信">
 
 <link rel="canonical" href="https://inkwall.gitee.io/2020/09/03/踩坑-Vue中v-on的传参/">
 
@@ -252,7 +252,121 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        
+        <p>Vue<strong>事件监听v-on</strong>的参数传递和<strong>父子组件通信</strong></p>
+<a id="more"></a>
+
+<h3 id="首先看看v-on的传参方式"><a href="#首先看看v-on的传参方式" class="headerlink" title="首先看看v-on的传参方式"></a>首先看看v-on的传参方式</h3><ol>
+<li><p>当函数没有参数时，调用可以不用带<code>()</code></p>
+</li>
+<li><p>当函数有参数，调用时不带<code>()</code>,自动触发event事件，原生dom事件</p>
+</li>
+<li><p>当函数有参数，正常调用要带<code>()</code></p>
+</li>
+<li><p>当函数有多个参数，但是少传参时，没有传参的会报<code>undefined</code>,不会触发event事件</p>
+</li>
+<li><p>当函数想要触发event事件，实参需要传<code>$event</code></p>
+<p>即以下代码</p>
+<pre class=" language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>app<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+        <span class="token comment" spellcheck="true">&lt;!-- 当函数没有参数时，调用可以不需要带() --></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>button</span> <span class="token attr-name">@click</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>btnClick<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>按钮1<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span class="token punctuation">></span></span>
+        <span class="token comment" spellcheck="true">&lt;!-- 当函数有参数，调用时不带()时，自动触发event事件 --></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>button</span> <span class="token attr-name">@click</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>btnClick1<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>按钮2<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span class="token punctuation">></span></span>
+        <span class="token comment" spellcheck="true">&lt;!-- 当函数有参数，正常调用调用带() --></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>button</span> <span class="token attr-name">@click</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>btnClick1(1)<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>按钮3<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span class="token punctuation">></span></span>
+        <span class="token comment" spellcheck="true">&lt;!-- 函数有多个参数，但是少传参时，没传参的会报undefined，不会触发event事件 --></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>button</span> <span class="token attr-name">@click</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>btnClick2(1)<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>按钮4<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span class="token punctuation">></span></span>
+        <span class="token comment" spellcheck="true">&lt;!-- 函数想要触发event事件，实参需要传$event --></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>button</span> <span class="token attr-name">@click</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>btnClick2(1,$event)<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>按钮5<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>../js/vue.js<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script language-javascript"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">></span></span><span class="token script language-javascript">
+        <span class="token keyword">const</span> app <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Vue</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+            el<span class="token punctuation">:</span> <span class="token string">'#app'</span><span class="token punctuation">,</span>
+            data<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+
+            <span class="token punctuation">}</span><span class="token punctuation">,</span>
+            methods<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+                <span class="token function">btnClick</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">"按钮"</span><span class="token punctuation">)</span>
+                <span class="token punctuation">}</span><span class="token punctuation">,</span>
+                <span class="token function">btnClick1</span><span class="token punctuation">(</span>event<span class="token punctuation">)</span><span class="token punctuation">{</span>
+                    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>event<span class="token punctuation">)</span>
+                <span class="token punctuation">}</span><span class="token punctuation">,</span>
+                <span class="token function">btnClick2</span><span class="token punctuation">(</span>abc<span class="token punctuation">,</span>event<span class="token punctuation">)</span><span class="token punctuation">{</span>
+                    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">"++++++"</span><span class="token punctuation">)</span>
+                    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>abc<span class="token punctuation">)</span>
+                    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>event<span class="token punctuation">)</span>
+                <span class="token punctuation">}</span><span class="token punctuation">,</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span>
+            computed<span class="token punctuation">:</span> <span class="token punctuation">{</span> 
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span></code></pre>
+</li>
+</ol>
+<h3 id="在组件通信中，子传父"><a href="#在组件通信中，子传父" class="headerlink" title="在组件通信中，子传父"></a>在组件通信中，子传父</h3><pre class=" language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>app<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    <span class="token comment" spellcheck="true">&lt;!-- 父组件监听事件 --></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>cpn</span> <span class="token attr-name">@itemclick</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>cpnclick<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>cpn</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>template</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>cpn<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>button</span> <span class="token attr-name">v-for</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>item in categories<span class="token punctuation">"</span></span> <span class="token attr-name">@click</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>submit(item)<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>{{item.name}}<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>template</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>../js/vue.js<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script language-javascript"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">></span></span><span class="token script language-javascript">
+    <span class="token keyword">const</span> cpn <span class="token operator">=</span> <span class="token punctuation">{</span>
+        template<span class="token punctuation">:</span> <span class="token string">"#cpn"</span><span class="token punctuation">,</span>
+        <span class="token function">data</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token punctuation">{</span>
+                categories<span class="token punctuation">:</span> <span class="token punctuation">[</span>
+                    <span class="token punctuation">{</span>id<span class="token punctuation">:</span> <span class="token string">"aaa"</span><span class="token punctuation">,</span>name<span class="token punctuation">:</span> <span class="token string">"笔记本"</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+                    <span class="token punctuation">{</span>id<span class="token punctuation">:</span> <span class="token string">"bbb"</span><span class="token punctuation">,</span>name<span class="token punctuation">:</span> <span class="token string">"手机"</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+                    <span class="token punctuation">{</span>id<span class="token punctuation">:</span> <span class="token string">"ccc"</span><span class="token punctuation">,</span>name<span class="token punctuation">:</span> <span class="token string">"平板"</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+                    <span class="token punctuation">{</span>id<span class="token punctuation">:</span> <span class="token string">"ddd"</span><span class="token punctuation">,</span>name<span class="token punctuation">:</span> <span class="token string">"风扇"</span><span class="token punctuation">}</span>
+                <span class="token punctuation">]</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        props<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        methods<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+            <span class="token function">submit</span><span class="token punctuation">(</span>item<span class="token punctuation">)</span><span class="token punctuation">{</span>
+                <span class="token comment" spellcheck="true">// 子组件发出去这个事件</span>
+                <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">$emit</span><span class="token punctuation">(</span><span class="token string">'itemclick'</span><span class="token punctuation">,</span>item<span class="token punctuation">)</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">const</span> app <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Vue</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+        el<span class="token punctuation">:</span> <span class="token string">"#app"</span><span class="token punctuation">,</span>
+        data<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        components<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+            cpn<span class="token punctuation">,</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        methods<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+            <span class="token function">cpnclick</span><span class="token punctuation">(</span>item<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>item<span class="token punctuation">)</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span></code></pre>
+<p>在上面的代码中，父组件中<code>@itemclick=&quot;cpnclick&quot;</code>监听子组件发送事件<code>itemclick</code>，子组件发送<code>itemclick</code>的同时也发送了<code>item</code>，</p>
+<p>当时关于如何监听<code>item</code>产生了疑惑，为什么要调用<code>cpnclick</code>却不带<code>()</code>和参数,于是进行一下测试</p>
+<ul>
+<li><p>当带了实参（item），结果打印<code>undefined</code></p>
+<p><code>@itemclick=&quot;cpnclick(item)&quot;</code></p>
+</li>
+<li><p>当不带<code>()</code>,能正常打印</p>
+<p><code>@itemclick=&quot;cpnclick&quot;</code></p>
+</li>
+<li><p>当实参传入<code>$event</code>,能正常打印</p>
+<p><code>@itemclick=&quot;cpnclick($event)&quot;</code></p>
+</li>
+</ul>
+<p>总结，实际上传递的是event事件，但是不是浏览器的event事件，所以传递的发送的第二个参数</p>
+
     </div>
 
     
@@ -271,8 +385,8 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/07/16/JS高级3原型链-1/" rel="prev" title="原型链、继承| JavaScript高级学习（三）">
-      <i class="fa fa-chevron-left"></i> 原型链、继承| JavaScript高级学习（三）
+    <a href="/2020/07/16/JS高级3原型链-1/" rel="prev" title="原型链、继承| JavaScript学习（三）">
+      <i class="fa fa-chevron-left"></i> 原型链、继承| JavaScript学习（三）
     </a></div>
       <div class="post-nav-item"></div>
     </div>
@@ -334,6 +448,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#首先看看v-on的传参方式"><span class="nav-number">1.</span> <span class="nav-text">首先看看v-on的传参方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在组件通信中，子传父"><span class="nav-number">2.</span> <span class="nav-text">在组件通信中，子传父</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
