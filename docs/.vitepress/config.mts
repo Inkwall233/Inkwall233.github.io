@@ -3,26 +3,21 @@ import { defineConfig } from 'vitepress'
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   title: "inkwall's blog",
-  description: "A VitePress Site",
+  description: '不积跬步，无以至千里；不积小流，无以成江海。',
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: 'Home', link: '/' },
-      { text: 'Examples', link: '/markdown-examples' }
+      { text: 'Blog', link: '/blog/20251207MCP' },
     ],
 
     sidebar: [
       {
-        text: 'Examples',
-        items: [
-          { text: 'Markdown Examples', link: '/markdown-examples' },
-          { text: 'Runtime API Examples', link: '/api-examples' }
-        ]
-      }
+        text: 'Blog',
+        items: [{ text: 'MCP', link: '/blog/20251207MCP' }],
+      },
     ],
 
-    socialLinks: [
-      { icon: 'github', link: 'https://github.com/vuejs/vitepress' }
-    ]
-  }
+    socialLinks: [{ icon: 'github', link: 'https://github.com/inkwall233/' }],
+  },
 })
